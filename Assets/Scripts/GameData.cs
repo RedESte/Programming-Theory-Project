@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameData : MonoBehaviour
 {
     public static string playerName;
+    public static int score;
+    public static int numberOfCrates = 24;
     GameData Instance;
     // Start is called before the first frame update
     void Start()
