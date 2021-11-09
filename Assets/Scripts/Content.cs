@@ -5,6 +5,7 @@ using UnityEngine;
 public class Content : MonoBehaviour
 {
     int objId;
+    Crate m_Crate;
     public int ObjId
     {
         get
@@ -18,20 +19,26 @@ public class Content : MonoBehaviour
         }
     }
     public GameManager gameManager;
-    public void SelectContent()
+    public void SelectContent(Crate crate)
     {
+        m_Crate = crate;
         if (gameManager != null)
         {
             gameManager.ContentSelected(objId);
         }
+        
     }
     public void CorrectSelection()
     {
-        gameObject.GetComponentInParent<Crate>();
+        gameObject.SetActive(false);
     }
     public void WrongSelection()
     {
-        gameObject.GetComponentInParent<Crate>();
+        if (m_Crate != null)
+        {
+            m_Crate.Reactivate();
+            gameObject.SetActive(false);
+        }
     }
     // Update is called once per frame
     void Update()

@@ -7,6 +7,7 @@ public class Crate : MonoBehaviour
     [SerializeField] ParticleSystem explosionPs;
     GameObject crateContent;
     Renderer objRenderer;
+    GameManager gameManager;
 
     public GameObject CrateContent { private get => crateContent; set => crateContent = value; }
     
@@ -14,16 +15,18 @@ public class Crate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         objRenderer = GetComponent<Renderer>();
     }
 
     private void OnMouseDown()
     {
+        if (!gameManager.IsPossibleToSelect) return;
         explosionPs.Play();
         objRenderer.enabled = false;
         CrateContent.SetActive(true);
         CrateContent.transform.position = transform.position;
-        CrateContent.GetComponent<Content>().SelectContent();
+        CrateContent.GetComponent<Content>().SelectContent(this);
     }
     public void Reactivate()
     {

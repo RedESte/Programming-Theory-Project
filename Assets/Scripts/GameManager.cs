@@ -8,10 +8,13 @@ public class GameManager : MonoBehaviour
     public GameObject pool;
     [SerializeField] List<GameObject> crateContentsPf;
     List<GameObject> crateContents = new List<GameObject>();
-    List<Content[]> contentList; 
-    int numberOfRows = 2;
-    int numberOfColumns = 2;
+    List<Content[]> contentList = new List<Content[]>(); 
+    int numberOfRows = 4;
+    int numberOfColumns = 4;
     int selectedId = int.MaxValue;
+    int score = 0;
+    bool isPossibleToSelect = true;
+    public bool IsPossibleToSelect { get => isPossibleToSelect; private set => isPossibleToSelect = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -71,17 +74,28 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            CloseCrates();
+            StartCoroutine(CloseCrates(id));
         }
     }
     void RightCouple()
     {
-        Content content = contentList[selectedId][0];
+        contentList[selectedId][0].CorrectSelection();
+        contentList[selectedId][1].CorrectSelection();
+        score++;
         selectedId = int.MaxValue;
     }
-    void CloseCrates()
+    IEnumerator CloseCrates(int id)
     {
+        IsPossibleToSelect = false;
+        yield return new WaitForSeconds(2);
+        contentList[selectedId][0].WrongSelection();
+        contentList[selectedId][1].WrongSelection();
+
+        contentList[id][0].WrongSelection();
+        contentList[id][1].WrongSelection();
+
         selectedId = int.MaxValue;
+        isPossibleToSelect = true;
     }
     // Update is called once per frame
     void Update()
