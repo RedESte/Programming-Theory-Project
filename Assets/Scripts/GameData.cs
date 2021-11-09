@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GameData : MonoBehaviour
 {
-    public static string playerName = "Player";
-    public static int score;
-    public static int numberOfCrates = 4;
-    GameData Instance;
-    // Start is called before the first frame update
+    public string playerName = "Player";
+    public int score;
+    public int numberOfCrates = 4;
+    public static GameData Instance;
+
     void Start()
     {
         if(Instance != null)
@@ -18,11 +18,5 @@ public class GameData : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

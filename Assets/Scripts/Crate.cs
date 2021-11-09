@@ -9,22 +9,25 @@ public class Crate : MonoBehaviour
     Renderer objRenderer;
     BoxCollider boxCollider;
     GameManager gameManager;
+    AudioSource audioSource;
 
     public GameObject CrateContent { private get => crateContent; set => crateContent = value; }
     
 
-    // Start is called before the first frame update
+
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         objRenderer = GetComponent<Renderer>();
         boxCollider = GetComponent<BoxCollider>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnMouseDown()
     {
         if (!gameManager.IsPossibleToSelect) return;
         explosionPs.Play();
+        audioSource.Play();
         objRenderer.enabled = false;
         boxCollider.enabled = false;
         CrateContent.SetActive(true);
@@ -36,9 +39,5 @@ public class Crate : MonoBehaviour
         objRenderer.enabled = true;
         boxCollider.enabled = true;
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

@@ -8,25 +8,26 @@ using TMPro;
 using UnityEditor;
 #endif
 
-
 public class MainMenu : MonoBehaviour
 {
     public RectTransform initialMenu;
     public RectTransform nameMenu;
     public TMP_InputField inputField;
     float transitionTime = 0.2f;
+    AudioSource audioSource;
     enum MenuName
     {
         StartMenu,
         NameMenu
     }
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
+
     public void NewGame()
     {
+        audioSource.Play();
         StartCoroutine(RotateMenu());
     }
     IEnumerator RotateMenu()
@@ -57,21 +58,23 @@ public class MainMenu : MonoBehaviour
                 initialMenu.rotation = Quaternion.Euler(rotation);
             else if (name == MenuName.NameMenu)
                 nameMenu.rotation = Quaternion.Euler(rotation);
-            else Debug.LogError("Wrong enum set in Rotate");
+            else Debug.LogError("Invalid enum");
 
             time += Time.deltaTime;
             yield return true;
         }
         if (name == MenuName.StartMenu) initialMenu.gameObject.SetActive(setActive);
         else if (name == MenuName.NameMenu) nameMenu.gameObject.SetActive(setActive);
-        else Debug.LogError("Wrong enum set in Rotate");
+        else Debug.LogError("Invalid enum");
     }
     public void Back()
     {
+        audioSource.Play();
         StartCoroutine(RotateBack());
     }
     public void Quit()
     {
+        audioSource.Play();
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else
@@ -81,12 +84,8 @@ public class MainMenu : MonoBehaviour
     
     public void LoadNewScene()
     {
-        GameData.playerName = inputField.text;
+        audioSource.Play();
+        GameData.Instance.playerName = inputField.text;
         SceneManager.LoadScene(1);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

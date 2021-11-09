@@ -8,18 +8,21 @@ public class MainUI : MonoBehaviour
 {
     [SerializeField] TMP_Text scoreText;
     GameManager gameManager;
-    // Start is called before the first frame update
+    AudioSource audioSource;
+
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        audioSource = GetComponent<AudioSource>();
     }
     public void BackToMainMenu()
     {
+        audioSource.Play();
         SceneManager.LoadScene(0);
     }
-    // Update is called once per frame
+
     void Update()
     {
-        scoreText.text = $"{GameData.playerName}'s score: {gameManager.Score}";
+        scoreText.text = $"{GameData.Instance.playerName}'s score: {gameManager.Score}";
     }
 }

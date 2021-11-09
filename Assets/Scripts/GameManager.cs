@@ -15,10 +15,12 @@ public class GameManager : MonoBehaviour
     int selectedId = int.MaxValue;
     int score = 0;
     bool isPossibleToSelect = true;
+
+    // ENCAPSULATION
     public bool IsPossibleToSelect { get => isPossibleToSelect; private set => isPossibleToSelect = value; }
     public int Score { get => score; private set => score = value; }
     int numberOfObj = 4;
-    // Start is called before the first frame update
+ 
     private void Awake()
     {
         GetVariables();
@@ -28,10 +30,11 @@ public class GameManager : MonoBehaviour
         PopulatePool();
         SpawnCrates();
     }
+    // ABSTRACTION
     void GetVariables()
     {
-        score = GameData.score;
-        numberOfObj = GameData.numberOfCrates;
+        score = GameData.Instance.score;
+        numberOfObj = GameData.Instance.numberOfCrates;
         numberOfRows = 4;
         numberOfColumns = numberOfObj / numberOfRows;
     }
@@ -56,7 +59,6 @@ public class GameManager : MonoBehaviour
     }
     void PopulatePool()
     {
-        //numberOfObj = numberOfColumns * numberOfRows / 2;
         for(int i=0; i<numberOfObj/2; i++)
         {
             Content[] array = new Content[2];
@@ -82,7 +84,6 @@ public class GameManager : MonoBehaviour
         }
         else if(selectedId == id)
         {
-            //Debug.Log(contentScore);
             StartCoroutine(RightCouple(contentScore));
         }
         else
@@ -116,16 +117,16 @@ public class GameManager : MonoBehaviour
         isPossibleToSelect = true;
     }
     
-    // Update is called once per frame
+
     void Update()
     {
         if(numberOfObj == 0)
         {
-            GameData.score = score;
-            int numberOfObject = GameData.numberOfCrates;
+            GameData.Instance.score = score;
+            int numberOfObject = GameData.Instance.numberOfCrates;
             if (numberOfObject != crateContentsPf.Count)
             {
-                GameData.numberOfCrates += 4;
+                GameData.Instance.numberOfCrates += 4;
             }
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
