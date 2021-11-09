@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,18 +11,36 @@ public class GameManager : MonoBehaviour
     List<GameObject> crateContents = new List<GameObject>();
     List<Content[]> contentList = new List<Content[]>(); 
     int numberOfRows = 4;
-    int numberOfColumns = 4;
+    int numberOfColumns = 3;
     int selectedId = int.MaxValue;
     int score = 0;
     bool isPossibleToSelect = true;
     public bool IsPossibleToSelect { get => isPossibleToSelect; private set => isPossibleToSelect = value; }
     public int Score { get => score; private set => score = value; }
-    int numberOfObj;
+    int numberOfObj = 4;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        GetVariables();
+    }
     void Start()
     {
         PopulatePool();
         SpawnCrates();
+    }
+    void GetVariables()
+    {
+        score = GameData.score;
+        numberOfObj = GameData.numberOfCrates;
+        if(numberOfObj == 4)
+        {
+            numberOfRows = 2;
+        }
+        else
+        {
+            numberOfRows = 4;
+        }
+        numberOfColumns = numberOfObj / numberOfRows;
     }
     void SpawnCrates()
     {
@@ -44,8 +63,8 @@ public class GameManager : MonoBehaviour
     }
     void PopulatePool()
     {
-        numberOfObj = numberOfColumns * numberOfRows / 2;
-        for(int i=0; i<numberOfObj; i++)
+        //numberOfObj = numberOfColumns * numberOfRows / 2;
+        for(int i=0; i<numberOfObj/2; i++)
         {
             Content[] array = new Content[2];
             array[0] = InstantiateContentAt(i);
@@ -86,7 +105,7 @@ public class GameManager : MonoBehaviour
         Score++;
         selectedId = int.MaxValue;
         isPossibleToSelect = true;
-        numberOfObj--;
+        numberOfObj -= 2;
     
     }
     IEnumerator CloseCrates(int id)
@@ -108,7 +127,13 @@ public class GameManager : MonoBehaviour
     {
         if(numberOfObj == 0)
         {
-            Debug.Log("You win!");
+            GameData.score = score;
+            int numberOfObject = GameData.numberOfCrates;
+            if (numberOfObject != crateContentsPf.Count)
+            {
+                GameData.numberOfCrates += 4;
+            }
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }
