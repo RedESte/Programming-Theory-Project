@@ -70,19 +70,23 @@ public class GameManager : MonoBehaviour
         }
         else if(selectedId == id)
         {
-            RightCouple();
+            StartCoroutine(RightCouple());
         }
         else
         {
             StartCoroutine(CloseCrates(id));
         }
     }
-    void RightCouple()
+    IEnumerator RightCouple()
     {
+        IsPossibleToSelect = false;
+        yield return new WaitForSeconds(2);
         contentList[selectedId][0].CorrectSelection();
         contentList[selectedId][1].CorrectSelection();
         score++;
         selectedId = int.MaxValue;
+        isPossibleToSelect = true;
+    
     }
     IEnumerator CloseCrates(int id)
     {
@@ -97,6 +101,7 @@ public class GameManager : MonoBehaviour
         selectedId = int.MaxValue;
         isPossibleToSelect = true;
     }
+    
     // Update is called once per frame
     void Update()
     {
