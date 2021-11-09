@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     bool isPossibleToSelect = true;
     public bool IsPossibleToSelect { get => isPossibleToSelect; private set => isPossibleToSelect = value; }
     public int Score { get => score; private set => score = value; }
-
+    int numberOfObj;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     }
     void PopulatePool()
     {
-        int numberOfObj = numberOfColumns * numberOfRows / 2;
+        numberOfObj = numberOfColumns * numberOfRows / 2;
         for(int i=0; i<numberOfObj; i++)
         {
             Content[] array = new Content[2];
@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
         Score++;
         selectedId = int.MaxValue;
         isPossibleToSelect = true;
+        numberOfObj--;
     
     }
     IEnumerator CloseCrates(int id)
@@ -105,6 +106,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(numberOfObj == 0)
+        {
+            Debug.Log("You win!");
+        }
     }
 }
