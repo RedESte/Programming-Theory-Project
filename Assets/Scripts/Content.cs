@@ -6,6 +6,7 @@ public class Content : MonoBehaviour
 {
     int objId;
     Crate m_Crate;
+    protected int contentScore = 5;
     public int ObjId
     {
         get
@@ -19,6 +20,7 @@ public class Content : MonoBehaviour
         }
     }
     GameManager gameManager;
+
     private void Awake()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -26,9 +28,9 @@ public class Content : MonoBehaviour
     public void SelectContent(Crate crate)
     {
         m_Crate = crate;
-        gameManager.ContentSelected(objId);
+        gameManager.ContentSelected(objId, contentScore);
     }
-    public void CorrectSelection()
+    public virtual void CorrectSelection()
     {
         gameObject.SetActive(false);
     }
@@ -40,9 +42,5 @@ public class Content : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

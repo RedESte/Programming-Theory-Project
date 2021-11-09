@@ -20,6 +20,6 @@ public class MainUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = $"Score: {gameManager.Score}";
+        scoreText.text = $"{GameData.playerName}'s score: {gameManager.Score}";
     }
 }

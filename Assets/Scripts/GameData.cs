@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameData : MonoBehaviour
 {
-    public static string playerName;
+    public static string playerName = "Player";
     public static int score;
     public static int numberOfCrates = 4;
     GameData Instance;

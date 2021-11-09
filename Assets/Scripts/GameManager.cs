@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
         obj.SetActive(false);
         return content;
     }
-    public void ContentSelected(int id)
+    public void ContentSelected(int id, int contentScore)
     {
         if(selectedId == int.MaxValue)
         {
@@ -82,20 +82,21 @@ public class GameManager : MonoBehaviour
         }
         else if(selectedId == id)
         {
-            StartCoroutine(RightCouple());
+            //Debug.Log(contentScore);
+            StartCoroutine(RightCouple(contentScore));
         }
         else
         {
             StartCoroutine(CloseCrates(id));
         }
     }
-    IEnumerator RightCouple()
+    IEnumerator RightCouple(int contentScore)
     {
         IsPossibleToSelect = false;
         yield return new WaitForSeconds(2);
         contentList[selectedId][0].CorrectSelection();
         contentList[selectedId][1].CorrectSelection();
-        Score++;
+        Score += contentScore;
         selectedId = int.MaxValue;
         isPossibleToSelect = true;
         numberOfObj -= 2;
