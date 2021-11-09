@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MainUI : MonoBehaviour
 {
@@ -12,7 +13,10 @@ public class MainUI : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
-
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
     // Update is called once per frame
     void Update()
     {

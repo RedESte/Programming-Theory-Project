@@ -32,14 +32,7 @@ public class GameManager : MonoBehaviour
     {
         score = GameData.score;
         numberOfObj = GameData.numberOfCrates;
-        if(numberOfObj == 4)
-        {
-            numberOfRows = 2;
-        }
-        else
-        {
-            numberOfRows = 4;
-        }
+        numberOfRows = 4;
         numberOfColumns = numberOfObj / numberOfRows;
     }
     void SpawnCrates()
