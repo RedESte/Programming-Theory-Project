@@ -18,15 +18,15 @@ public class Content : MonoBehaviour
             objId = value;
         }
     }
-    public GameManager gameManager;
+    GameManager gameManager;
+    private void Awake()
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
     public void SelectContent(Crate crate)
     {
         m_Crate = crate;
-        if (gameManager != null)
-        {
-            gameManager.ContentSelected(objId);
-        }
-        
+        gameManager.ContentSelected(objId);
     }
     public void CorrectSelection()
     {

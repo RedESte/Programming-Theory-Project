@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     int score = 0;
     bool isPossibleToSelect = true;
     public bool IsPossibleToSelect { get => isPossibleToSelect; private set => isPossibleToSelect = value; }
+    public int Score { get => score; private set => score = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -57,7 +58,6 @@ public class GameManager : MonoBehaviour
         GameObject obj = Instantiate(crateContentsPf[index], pool.transform);
         Content content = obj.GetComponent<Content>();
         content.ObjId = index;
-        content.gameManager = this;
         crateContents.Add(obj);
         obj.SetActive(false);
         return content;
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2);
         contentList[selectedId][0].CorrectSelection();
         contentList[selectedId][1].CorrectSelection();
-        score++;
+        Score++;
         selectedId = int.MaxValue;
         isPossibleToSelect = true;
     
